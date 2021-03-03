@@ -14,7 +14,7 @@ def init_sqlite_db():
     conn = sqlite3.connect('database.db')
     print("Opened database successfully")
 
-    conn.execute('CREATE TABLE IF NOT EXISTS subscribe (name TEXT, lastname TEXT, cell TEXT, email TEXT)')
+    conn.execute('CREATE TABLE IF NOT EXISTS subscribe (name TEXT, lastname TEXT, cell INT, email TEXT)')
     print("Table created successfully")
     conn.close()
 
@@ -31,53 +31,52 @@ def enter_new():
     return render_template('subscribe.html')
 
 
-@app.route('/add-new-subscriber/', methods=['POST'])
+@app.route('/add-new-subscriber/', methods=['POST', 'GET'])
 def add_new_subscriber():
-
+    msg='msg'
     if request.method == "POST":
-        try:
-            name = request.form['name']
-            lastname =request.form['lastname']
-            cell = request.form['cell']
-            email = request.form['email']
-            address = request.form['addr']
-            zip_code = request.format['code']
-            province = request.form['province']
-
-            with sqlite3.connect('database.db') as con:
-                cur = con.cursor()
-                cur.execute("INSERT INTO subscribe (name, lastname, cell, email) VALUES (?, ?, ?, ?, ?, ?), ? ", (name, lastname, cell, email, address, zip_code, province))
-                con.commit()
-                msg = "successfully subscribed"
-
-        except Exception as e:
-            con.rollback()
-            msg = "error occurred in insert operation" + e
-
-        finally:
-            con.close()
-            return render_template('result.html', msg=msg)
+        msg=None
+    try:
+        post_data = request.get_json()
+        name = post_data['name']
+        lastname =post_data['lastname']
+        email = post_data['email']
+        cell = post_data['cell']
 
 
-    @app.route('/show-subscribers/', methods=['GET'])
-    def show_subscribers():
-        records = []
-        try:
-            with sqlite3.connect('database.db') as con:
-                con.row_factory = dict_factory()
-                cur = con.cursor()
-                cur .execute("SELECT * FROM subscribe")
-                records = cur.fetchall()
 
-        except Exception as ex:
-            con.rollback()
-            print("There was an error fetching results from the database." + ex)
-        finally:
-            con.close()
-            return jsonify(records)
+        with sqlite3.connect('database.db') as con:
+            cur = con.cursor()
+            cur.execute("INSERT INTO subscribe (name, lastname, email, cell) VALUES (?, ?, ?, ?)", (name, lastname, email, cell))
+            con.commit()
+            msg = "successfully subscribed"
+
+    except Exception as e:
+        con.rollback()
+        msg = "error occurred in insert operation" + e
+
+    finally:
+        return render_template('result.html', msg=msg)
+        con.close()
+
+
+@app.route('/show-subscribers/', methods=['GET'])
+def show_subscribers():
+    try:
+        with sqlite3.connect('database.db') as con:
+            con.row_factory = dict_factory
+            con = sqlite3.connect('database.db')
+            cur = con.cursor()
+            cur.execute("SELECT * FROM subscribe")
+            records = cur.fetchall()
+
+    except Exception as ex:
+        con.rollback()
+        print("There was an error fetching results from the database." + ex)
+    finally:
+        con.close()
+        return jsonify(records)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
