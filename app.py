@@ -31,18 +31,15 @@ def enter_new():
     return render_template('subscribe.html')
 
 
-@app.route('/add-new-subscriber/', methods=['POST', 'GET'])
+@app.route('/add-new-subscriber/', methods=['POST'])
 def add_new_subscriber():
-    msg='msg'
-    if request.method == "POST":
-        msg=None
+    msg = None
     try:
         post_data = request.get_json()
         name = post_data['name']
         lastname =post_data['lastname']
         email = post_data['email']
         cell = post_data['cell']
-
 
 
         with sqlite3.connect('database.db') as con:
@@ -56,7 +53,7 @@ def add_new_subscriber():
         msg = "error occurred in insert operation" + e
 
     finally:
-        return render_template('result.html', msg=msg)
+        return jsonify(msg)
         con.close()
 
 
