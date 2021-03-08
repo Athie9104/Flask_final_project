@@ -16,10 +16,10 @@ def init_sqlite_db():
 
     conn.execute('CREATE TABLE IF NOT EXISTS subscribe (name TEXT, lastname TEXT, cell INT, email TEXT)')
     print("Subscriber table created successfully")
-
     conn.execute('CREATE TABLE IF NOT EXISTS images (title TEXT, subtitle TEXT, description TEXT, image TEXT)')
     print("Images table created successfully")
-
+    conn.execute('CREATE TABLE IF NOT EXISTS sending_mail (firstname TEXT, email TEXT, subject TEXT)')
+    print("Images table created successfully")
     conn.close()
 
 
