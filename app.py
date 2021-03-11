@@ -78,49 +78,49 @@ def show_subscribers():
         con.close()
         return jsonify(records)
 
-
-@app.route('/blogs/')
-def insert_blogs():
-    try:
-        with sqlite3.connect('database.db') as con:
-            con.row_factory = dict_factory
-            cur = con.cursor()
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/7hnJGvXc/my-people.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/VL038YGD/umqombothi.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/HxKBZMgH/goat-slaughter.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/P5pf0sYj/swazi-food.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/Y0YfdyRf/isonka-samanzi.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/3JqfWgGh/bean-soup.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/bJLyczvm/umngqungqo.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/BbQwk38c/iduli.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/PxFmfn3M/lobola.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/SKS118nY/ulwaluko.jpg')")
-            cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/VLS84xxP/beauty-of-EC.jpg')")
-            con.commit()
-            msg = "record added successfully"
-    except Exception as e:
-        con.rollback()
-        msg = "Error occurred in insert operation" + str(e)
-    finally:
-        con.close()
-        return jsonify(msg)
-
-
-@app.route('/show-images/', methods=['GET'])
-def show_images():
-    data = []
-    try:
-        with sqlite3.connect('database.db') as con:
-            con.row_factory = dict_factory
-            cur = con.cursor()
-            cur.execute('SELECT * FROM images')
-            data = cur.fetchall()
-    except Exception as e:
-        con.rollback()
-        print("There was an error fetching products from the database") + e
-    finally:
-        con.close()
-        return jsonify(data)
+#
+# @app.route('/blogs/')
+# def insert_blogs():
+#     try:
+#         with sqlite3.connect('database.db') as con:
+#             con.row_factory = dict_factory
+#             cur = con.cursor()
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/7hnJGvXc/my-people.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/VL038YGD/umqombothi.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/HxKBZMgH/goat-slaughter.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/P5pf0sYj/swazi-food.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/Y0YfdyRf/isonka-samanzi.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/3JqfWgGh/bean-soup.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/bJLyczvm/umngqungqo.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/BbQwk38c/iduli.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/PxFmfn3M/lobola.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/SKS118nY/ulwaluko.jpg')")
+#             cur.execute("INSERT INTO images(title, subtitle, description, image) VALUES('Umsebenzi', 'subtitle', 'descript', 'https://i.postimg.cc/VLS84xxP/beauty-of-EC.jpg')")
+#             con.commit()
+#             msg = "record added successfully"
+#     except Exception as e:
+#         con.rollback()
+#         msg = "Error occurred in insert operation" + str(e)
+#     finally:
+#         con.close()
+#         return jsonify(msg)
+#
+#
+# @app.route('/show-images/', methods=['GET'])
+# def show_images():
+#     data = []
+#     try:
+#         with sqlite3.connect('database.db') as con:
+#             con.row_factory = dict_factory
+#             cur = con.cursor()
+#             cur.execute('SELECT * FROM images')
+#             data = cur.fetchall()
+#     except Exception as e:
+#         con.rollback()
+#         print("There was an error fetching products from the database") + e
+#     finally:
+#         con.close()
+#         return jsonify(data)
 
 
 
