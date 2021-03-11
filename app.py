@@ -48,7 +48,7 @@ def add_new_subscriber():
 
         with sqlite3.connect('database.db') as con:
             cur = con.cursor()
-            cur.execute("INSERT INTO subscribe (name, lastname, email, cell) VALUES (?, ?, ?, ?)", (name, lastname, email, cell))
+            cur.execute("INSERT INTO subscribe (name, lastname, cell, email) VALUES (?, ?, ?, ?)", (name, lastname, cell, email))
             con.commit()
             msg = "successfully subscribed"
 
