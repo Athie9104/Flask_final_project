@@ -66,7 +66,6 @@ def show_subscribers():
     try:
         with sqlite3.connect('database.db') as con:
             con.row_factory = dict_factory
-            con = sqlite3.connect('database.db')
             cur = con.cursor()
             cur.execute("SELECT * FROM subscribe")
             records = cur.fetchall()
